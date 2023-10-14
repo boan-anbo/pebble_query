@@ -5,7 +5,7 @@ edition = "2021"
 authors = ["Bo An"]
 license = "MIT"
 description = "A helper library for SeaOrm to parse execute, and return standard DTOs with query metadata."
-repository = "github.com/boan-anbo/pebble_query.git"
+repository = "https://github.com/boan-anbo/pebble_query.git"
 readme = "README.md"
 keywords = ["sea-orm"]
 
