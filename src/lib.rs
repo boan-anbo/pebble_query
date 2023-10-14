@@ -1,22 +1,22 @@
-//! Pebble query
+//! # Pebble query
 //!
-//! # What is Pebble Query
+//! ## What is Pebble Query
 //!
 //! A simple helper library for SeaOrm to parse (applying filters, pagination, and sorting), execute, and return standard DTOs with metadata.
 //!
-//! # What it does
+//! ## What it does
 //! - Apply standard DTOs on SeaOrm `Select<T>`.
 //! - Automatically filter by column fields and operators,
 //! - sort by column fields, and
 //! - paginate the query.
 //! - Return standard DTOs with pagination information.
 //!
-//! # Typical use case:
+//! ## Typical use case:
 //! - Handle complex standard query request with multiple filters, sorting, and pagination from API clients, e.g. JSON request from web frontend.
 //!
 //! In other words, Pebble Query provides some composable, generic functions that allow feeding SeaOrm the same standard struct and expecting results wrapped in standard struct ready to be consumed. It can greatly simplify the common queries and can used for any SeaOrm entities without much boilerplate code.
 //!
-//! # Example
+//! ## Example
 //!
 //! For a sample database task:
 //!
@@ -154,7 +154,7 @@
 //!
 //! Some other middle util methods, e.g. convert SearchCondition to SeaOrm Condition, are also exposed which you can use to reduce boilerplate code.
 //!
-//! # Note:
+//! ## Note:
 //!
 //! 1. This is not the most polished library. __Please do not use in production without reviewing the code and make necessary changes__.
 //! 2. You can get rid of the sample Struct and use your own DTOs. The `prost` dependency is only used for the sample DTOs, both of which can be removed.
