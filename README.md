@@ -40,27 +40,27 @@ A typical SeaOrm DSL query looks like this which is not easily reusable:
 let book_ids: Vec<i32> = vec![1, 2, 3];
 
 // construct query
-let select: Select<Book> = book::Entity::find()
-.inner_join(author::Entity)
-.filter(
-Expr::col((document::Entity, document::Column::Id)).is_in(book_ids).into_condition() // filter by book ids
-)
-.filter(
-Expr::col((book::Entity, book::Column::Title)) // contains "sea"
-.contains("sea")
-.and(Expr::col((book::Entity, book::Column::PublicationYear)) // published after 1976
-.gt(1976))
-)
-.order_by_asc(book::Column::Title)
-.offset(10)
-.limit(10);
+let select: Select<book::Entity> = book::Entity::find()
+                            .inner_join(author::Entity)
+                            .filter(
+                                Expr::col((document::Entity, document::Column::Id)).is_in(book_ids).into_condition() // filter by book ids
+                            )
+                            .filter(
+                                Expr::col((book::Entity, book::Column::Title)) // contains "sea"
+                            .contains("sea")
+                                .and(Expr::col((book::Entity, book::Column::PublicationYear)) // published after 1976
+                                    .gt(1976))
+                            )
+                            .order_by_asc(book::Column::Title)
+                            .offset(10)
+                            .limit(10);
 
 let result: Vec<book::Model> = select.clone().all(db).await?;
 
 // another trip to the database to get the pagination information such as total number of items and pages.
 let pagination_info = select
-.paginate(db, 10)
-.num_items_and_pages().await?;
+                    .paginate(db, 10)
+                    .num_items_and_pages().await?;
 
  ```
 
@@ -71,11 +71,11 @@ names and SeaOrm Columns. For example:
 
  ```rust
 let book_column_map: HashMap<String, (book::Entity, book::Entity::Column) > = std::collections::HashMap::from([
-("id".to_string(), (book::Entity, book::Column::Id)),
-("title".to_string(), (book::Entity, book::Column::Title)),
-("publication_year".to_string(), (book::Entity, book::Column::PublicationYear)),
-// and so on to map all the fields you want to be able to query
-].into_iter().map( | (k, v) | (k.to_string(), v)).collect();
+                        ("id".to_string(), (book::Entity, book::Column::Id)),
+                        ("title".to_string(), (book::Entity, book::Column::Title)),
+                        ("publication_year".to_string(), (book::Entity, book::Column::PublicationYear)),
+                        // and so on to map all the fields you want to be able to query
+                    ].into_iter().map( | (k, v) | (k.to_string(), v)).collect();
  ```
 
  ```rust
@@ -112,13 +112,16 @@ let query = SearchQuery {
 Then you can simply do:
 
  ```rust
- let db = conn();
+let db = conn();
+
 let book_ids: Vec<i32> = vec![1, 2, 3];
+
 let select: Select<Book> = book::Entity::find()
-.inner_join(author::Entity)
-.filter(
-Expr::col((document::Entity, document::Column::Id)).is_in(book_ids).into_condition() // filter by book ids
-);
+                    .inner_join(author::Entity)
+                    .filter(
+                        Expr::col((document::Entity, document::Column::Id)).is_in(book_ids).into_condition() // filter by book ids
+                    );
+
 let results: PebbleQueryResult<book::Model> = use_pebble_query(select, query, & BOOK_COLUMN_MAP, db).await?;
  ```
 
@@ -126,12 +129,13 @@ Or use fluent syntax:
 
  ```rust
 let db = conn();
+
 let result: PebbleQueryResult<book::Model> = book::Entity::find()
-.inner_join(author::Entity)
-.filter(
-Expr::col((document::Entity, document::Column::Id)).is_in(doc_ids).into_condition()
-)
-.pebble_query(query, & BOOK_COLUMN_MAP, db).await?; // add this to your existing `Select`.
+                                        .inner_join(author::Entity)
+                                        .filter(
+                                            Expr::col((document::Entity, document::Column::Id)).is_in(doc_ids).into_condition()
+                                        )
+                                        .pebble_query(query, & BOOK_COLUMN_MAP, db).await?; // add this to your existing `Select`.
  ```
 
 The query result, with pagination information will be returned in these structs, ready to be returned to the frontend.
