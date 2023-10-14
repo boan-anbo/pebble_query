@@ -79,7 +79,9 @@ let book_column_map: HashMap<String, (book::Entity, book::Entity::Column) > = st
  ```
 
  ```rust
- // then you can populate the standard SearchQuery DTO struct with the same query as above. Our example below is handwritten, but usually is generated and fed to SeaOrm backend. In fact, you can simply provide None for the `SearchQuery` parameter to Pebble Query and it will return all the results filtered by your initial `Select<T>`.
+// then you can populate the standard SearchQuery DTO struct with the same query as above. 
+// Our example below is handwritten, but usually is generated and fed to SeaOrm backend. 
+// In fact, you can simply provide None for the `SearchQuery` parameter to Pebble Query and it will return all the results filtered by your initial `Select<T>`.
 let query = SearchQuery {
         sort: Some(SearchSortOption {
         field: "title".to_string(),
