@@ -7,7 +7,7 @@ use convert_case::{Case, Casing};
 use sea_orm::prelude::Expr;
 use sea_orm::{
     ColumnTrait, Condition, ConnectionTrait, DbErr, EntityTrait, FromQueryResult,
-    ItemsAndPagesNumber, Linked, ModelTrait, PaginatorTrait, QueryFilter, QueryOrder, QuerySelect,
+    ItemsAndPagesNumber, Linked, ModelTrait, PaginatorTrait, QueryFilter, QueryOrder,
     QueryTrait, Select,
 };
 

@@ -111,14 +111,14 @@ let book_column_map: HashMap<String, (book::Entity, book::Entity::Column)> = std
     .filter(
      Expr::col((document::Entity, document::Column::Id)).is_in(book_ids).into_condition() // filter by book ids
     );
- let results: PebbleQueryResult<book::Entity> = use_pebble_query(select, query, &BOOK_COLUMN_MAP, db).await?;
+ let results: PebbleQueryResult<book::Model> = use_pebble_query(select, query, &BOOK_COLUMN_MAP, db).await?;
  ```
 
  Or use fluent syntax:
 
  ```rust
 let db = conn();
-let result = book::Entity::find()
+let result: PebbleQueryResult<book::Model> = book::Entity::find()
     .inner_join(author::Entity)
     .filter(
      Expr::col((document::Entity, document::Column::Id)).is_in(doc_ids).into_condition()
